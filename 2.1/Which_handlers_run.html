@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <button id="button"></button>
+
+    <script>
+      button.addEventListener("click", () => alert("1")); // it will be the first to work because he was the first to be added
+
+      button.removeEventListener("click", () => alert("1")); // it is not deleted because another function is passed
+
+      button.onclick = () => alert(2); // the second one will earn it because the second one was added
+    </script>
+  </body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        #field {
+            width: 200px;
+            height: 150px;
+            border: 10px solid black;
+            background-color: #00ff00;
+            overflow: hidden;
+            /* position: absolute; */
+        }
+
+        #ball {
+            position: absolute;
+            transition: 0.75s;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    Click on a field to move the ball there.
+    <br />
+    The ball should never leave the field.
+
+    <div id="field">
+        <img src="https://en.js.cx/clipart/ball.svg" id="ball" /> . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . .
+    </div>
+    <script>
+        field.addEventListener("click", (e) => {
+            let divParameters = e.currentTarget.getBoundingClientRect();
+            function checkXLeft() {
+                if (divParameters.left + 10 + ball.offsetWidth / 2 < e.clientX)
+                    return true;
+                else {
+                    return divParameters.left + 10;
+                }
+            }
+            function checkXRight() {
+                if (
+                    e.clientX + ball.offsetWidth / 2 <
+                    divParameters.x + divParameters.width - 10
+                )
+                    return true;
+                else {
+                    return (
+                        divParameters.x + divParameters.width - 10 - ball.offsetWidth
+                    );
+                }
+            }
+            function checkYTop() {
+                if (divParameters.top + 10 + ball.offsetHeight / 2 < e.clientY)
+                    return true;
+                else {
+                    return divParameters.top + 10;
+                }
+            }
+            function checkYBottom() {
+                if (
+                    e.clientY + ball.offsetHeight / 2 <
+                    divParameters.y + divParameters.height - 10
+                )
+                    return true;
+                else {
+                    return (
+                        divParameters.y + divParameters.height - 10 - ball.offsetHeight
+                    );
+                }
+            }
+            function moveBall() {
+                let indexOfLeft = true;
+                let indexOfTop = true;
+                if (typeof checkXLeft() !== "boolean") {
+                    indexOfLeft = checkXLeft();
+                } else if (typeof checkXRight() !== "boolean") {
+                    indexOfLeft = checkXRight();
+                }
+                if (typeof checkYTop() !== "boolean") {
+                    indexOfTop = checkYTop();
+                } else if (typeof checkYBottom() !== "boolean") {
+                    indexOfTop = checkYBottom();
+                }
+
+                ball.style.left =
+                    typeof indexOfLeft === "boolean"
+                        ? e.clientX - ball.offsetWidth / 2 + "px"
+                        : indexOfLeft + "px";
+                ball.style.top =
+                    typeof indexOfTop === "boolean"
+                        ? e.clientY - ball.offsetHeight / 2 + "px"
+                        : indexOfTop + "px";
+            }
+            moveBall();
+        });
+    </script>
+</body>
+
+</html>
