@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        .carousel {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            padding: 0;
+            transition: 1s all;
+
+        }
+
+        .arrow {
+            border: 1px solid black;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: 600;
+            color: #444444FF;
+            width: 40px;
+
+        }
+
+        .arrow:hover {
+            cursor: pointer;
+            background-color: #AFAFAFFF;
+        }
+        
+
+        li {
+            list-style-type: none;
+
+        }
+
+        .main {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            width: 500px;
+            background-color: #EEEEEEFF;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        img {
+            width: 100px;
+
+        }
+
+        .content {
+            width: 300px;
+            overflow: hidden;
+
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main">
+        <button class="arrow left">⇦</button>
+        <div class="content">
+            <ul class="carousel">
+                <li><img src="https://en.js.cx/carousel/1.png" /></li>
+                <li><img src="https://en.js.cx/carousel/2.png" /></li>
+                <li><img src="https://en.js.cx/carousel/3.png" /></li>
+                <li><img src="https://en.js.cx/carousel/4.png" /></li>
+                <li><img src="https://en.js.cx/carousel/5.png" /></li>
+                <li><img src="https://en.js.cx/carousel/6.png" /></li>
+                <li><img src="https://en.js.cx/carousel/7.png" /></li>
+                <li><img src="https://en.js.cx/carousel/8.png" /></li>
+                <li><img src="https://en.js.cx/carousel/9.png" /></li>
+                <li><img src="https://en.js.cx/carousel/10.png" /></li>
+            </ul>
+        </div>
+        <button class="arrow right">⇨</button>
+    </div>
+    <script>
+        let leftHidden = 0;
+        let rightHidden = 0;
+        let count = 0;
+        let position = 0;
+
+        document.addEventListener('click', (e) => {
+            if ([...e.target.classList].includes('arrow')) {
+                if (document.querySelector(".carousel").children.length != count) {
+                    count = document.querySelector(".carousel").children.length;
+                    leftHidden = 0;
+                    rightHidden = (count <= 3) ? 0 : (count - 3);
+                    position = 0;
+
+                }
+                function moveToLeft() {
+                    if (rightHidden === 0) return;
+                    else if (rightHidden < 3) {
+                        position -= (rightHidden * 100)
+                        document.querySelector('.carousel').style.transform = `translate(${position}px,0px)`
+                        leftHidden += rightHidden;
+                        rightHidden = 0;
+                    }
+                    else {
+                        position -= 300;
+                        document.querySelector('.carousel').style.transform = `translate(${position}px,0px)`;
+                        rightHidden -= 3;
+                        leftHidden += 3;
+                    }
+
+                }
+                function moveToRight() {
+                    if (leftHidden === 0) return;
+                    else if (leftHidden < 3) {
+                        position += (leftHidden * 100)
+                        document.querySelector('.carousel').style.transform = `translate(${position}px,0px)`
+                        rightHidden += leftHidden;
+                        leftHidden = 0;
+                    }
+                    else {
+                        position += 300;
+                        document.querySelector('.carousel').style.transform = `translate(${position}px,0px)`;
+                        rightHidden += 3;
+                        leftHidden -= 3;
+                    }
+                }
+
+                ([...e.target.classList].includes('left')) && moveToLeft();
+                ([...e.target.classList].includes('right')) && moveToRight();
+
+
+            }
+        })
+    </script>
+</body>
+
+</html>
